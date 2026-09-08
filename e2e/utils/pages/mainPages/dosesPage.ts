@@ -1,4 +1,6 @@
 import {Page, Locator} from "@playwright/test"
+import {expect} from "playwright/test";
+import {HOUSEHOLD_TEXTS} from "../subpages/HouseholdSubpage";
 
 export const DOSES_PAGE_TEXTS = {
     title: `Doses`,
@@ -25,5 +27,10 @@ export class DosesPage {
 
     async goToPage() {
         await this.page.goto(`/doses`);
+    }
+
+    async clickManagePeopleBtn() {
+        await this.managePeopleBtn.click();
+        await expect(this.page).toHaveURL(HOUSEHOLD_TEXTS.householdUrl);
     }
 }

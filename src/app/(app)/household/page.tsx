@@ -14,8 +14,8 @@ export default async function HouseholdPage({
   return (
     <div className="mx-auto w-full max-w-2xl">
       <header className="mb-4 flex items-baseline justify-between">
-        <h1 className="text-2xl font-semibold tracking-tight">Household</h1>
-        <Link href="/household/new" className={LINK_BUTTON} style={toneStyle('accent')}>
+        <h1 className="text-2xl font-semibold tracking-tight" test-data="household-title">Household</h1>
+        <Link href="/household/new" className={LINK_BUTTON} test-data="new-person-btn" style={toneStyle('accent')}>
           New person
         </Link>
       </header>
@@ -23,6 +23,7 @@ export default async function HouseholdPage({
       <div
         className="mb-4 grid grid-cols-2 gap-1 rounded-xl border p-1 text-center text-sm"
         style={{ borderColor: 'var(--border)' }}
+        test-data="household-list-switch"
       >
         <Tab href="/household" label="Active" active={!showArchived} />
         <Tab href="/household?archived=1" label="Archived" active={showArchived} />
@@ -32,6 +33,7 @@ export default async function HouseholdPage({
         <div
           className="rounded-2xl border border-dashed p-8 text-center text-sm"
           style={{ borderColor: 'var(--border)', color: 'var(--muted)' }}
+          test-data="empty-page-description"
         >
           {showArchived ? 'Nothing archived.' : 'Add whoever takes something regularly.'}
         </div>

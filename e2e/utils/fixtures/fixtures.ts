@@ -8,11 +8,13 @@ import {ShoppingPage} from "../pages/mainPages/shoppingPage";
 import {TripsPage} from "../pages/mainPages/tripsPage";
 import {ProductsPage} from "../pages/mainPages/productsPage";
 import {AddBoxSubpage} from "../pages/subpages/addBoxSubpage";
+import {HouseholdSubpage} from "../pages/subpages/HouseholdSubpage";
 
 type MainFixtures = {
     loginPage: LoginPage;
     stockPage: StockPage;
     dosesPage: DosesPage;
+    householdSubpage: HouseholdSubpage;
     expiringPage: ExpiringPage;
     shoppingPage: ShoppingPage;
     tripsPage: TripsPage;
@@ -55,6 +57,10 @@ export const test = base.extend<MainFixtures>({
     // Subpages
     addBoxSubpage: async ({page}, use) => {
         await use(new AddBoxSubpage(page))
+    },
+
+    householdSubpage: async ({page}, use) => {
+        await use(new HouseholdSubpage(page))
     },
 
     // Misc

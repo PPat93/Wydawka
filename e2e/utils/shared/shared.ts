@@ -6,6 +6,11 @@ export const TEXTS = {
     subtitle: `Domowa apteczka`
 }
 
+export const ACTIVATION_VALS = {
+    regBtnActive: /\(--text\)/,
+    regBtnInactive: /\(--muted\)/
+}
+
 enum MenuOptions {
     Stock = "stock",
     Doses = "doses",

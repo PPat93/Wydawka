@@ -1,5 +1,5 @@
 import {test, expect} from "../utils/fixtures/fixtures";
-import {TEXTS} from "../utils/shared/shared";
+import {ACTIVATION_VALS, TEXTS} from "../utils/shared/shared";
 import {loginPageTexts} from "../utils/pages/mainPages/loginPage";
 import {STOCK_PAGE_TEXTS} from "../utils/pages/mainPages/stockPage";
 import {DOSES_PAGE_TEXTS} from "../utils/pages/mainPages/dosesPage";
@@ -8,6 +8,7 @@ import {SHOPPING_PAGE_TEXTS} from "../utils/pages/mainPages/shoppingPage";
 import {TRIPS_PAGE_TEXTS} from "../utils/pages/mainPages/tripsPage";
 import {PRODUCTS_PAGE_TEXTS} from "../utils/pages/mainPages/productsPage";
 import {ADD_BOX_TEXTS, AddBoxSubpage} from "../utils/pages/subpages/addBoxSubpage";
+import {HOUSEHOLD_TEXTS, HouseholdSubpage} from "../utils/pages/subpages/HouseholdSubpage";
 
 test.describe(`Login page display`, {tag: `@smoke`}, async () => {
 
@@ -141,10 +142,7 @@ test.describe(`Main pages display - empty DB`, {tag: `@smoke`}, async () => {
         // await expect(tripsPage.doneSection.locator(tripsPage.sectionTitle)).toHaveText(TRIPS_PAGE_TEXTS.doneSectionTitle);
     })
 
-    test(`Products page is displayed`, async ({productsPage}) => {
-
-        const regBtnActive = /\(--text\)/
-        const regBtnInactive = /\(--muted\)/
+    test(`Products page is displayed - Active`, async ({productsPage}) => {
 
         //  Arrange & Act
         await productsPage.goToPage();
@@ -156,33 +154,29 @@ test.describe(`Main pages display - empty DB`, {tag: `@smoke`}, async () => {
         await expect(productsPage.newProductBtn).toHaveText(PRODUCTS_PAGE_TEXTS.newProductBtn);
         await expect(productsPage.productStatsListSwitch).toBeVisible();
         await expect(productsPage.productStatsListSwitch.getByText(PRODUCTS_PAGE_TEXTS.switchActive)).toBeVisible();
-        await expect(productsPage.productStatsListSwitch.getByText(PRODUCTS_PAGE_TEXTS.switchActive)).toHaveAttribute(`style`, regBtnActive);
+        await expect(productsPage.productStatsListSwitch.getByText(PRODUCTS_PAGE_TEXTS.switchActive)).toHaveAttribute(`style`, ACTIVATION_VALS.regBtnActive);
         await expect(productsPage.productStatsListSwitch.getByText(PRODUCTS_PAGE_TEXTS.switchArchived)).toBeVisible();
-        await expect(productsPage.productStatsListSwitch.getByText(PRODUCTS_PAGE_TEXTS.switchArchived)).toHaveAttribute(`style`, regBtnInactive);
+        await expect(productsPage.productStatsListSwitch.getByText(PRODUCTS_PAGE_TEXTS.switchArchived)).toHaveAttribute(`style`, ACTIVATION_VALS.regBtnInactive);
         await expect(productsPage.mainSearchField).toBeVisible();
         await expect(productsPage.emptyPageDescription).toBeVisible();
         await expect(productsPage.emptyPageDescription).toHaveText(PRODUCTS_PAGE_TEXTS.emptyPageActive);
+    })
 
+    test(`Products page is displayed - Archived`, async ({productsPage}) => {
 
-        //  TODO - move to flow verifications
-        // await expect(productsPage.productsList).toBeVisible()
-        //
-        // const productListItemsActive = await productsPage.productsListItem.filter({visible: true}).count();
-        // expect(productListItemsActive).toBeGreaterThanOrEqual(4);
-
-        //  Archived list
+        //  Arrange
+        await productsPage.goToPage();
+        //  Act
         await productsPage.productStatsListSwitch.getByText(PRODUCTS_PAGE_TEXTS.switchArchived).click();
+
+        //  Assert
+        //  Archived list
         await expect(productsPage.productStatsListSwitch.getByText(PRODUCTS_PAGE_TEXTS.switchActive)).toBeVisible();
-        await expect(productsPage.productStatsListSwitch.getByText(PRODUCTS_PAGE_TEXTS.switchActive)).toHaveAttribute(`style`, regBtnInactive);
+        await expect(productsPage.productStatsListSwitch.getByText(PRODUCTS_PAGE_TEXTS.switchActive)).toHaveAttribute(`style`, ACTIVATION_VALS.regBtnInactive);
         await expect(productsPage.productStatsListSwitch.getByText(PRODUCTS_PAGE_TEXTS.switchArchived)).toBeVisible();
-        await expect(productsPage.productStatsListSwitch.getByText(PRODUCTS_PAGE_TEXTS.switchArchived)).toHaveAttribute(`style`, regBtnActive);
+        await expect(productsPage.productStatsListSwitch.getByText(PRODUCTS_PAGE_TEXTS.switchArchived)).toHaveAttribute(`style`, ACTIVATION_VALS.regBtnActive);
         await expect(productsPage.emptyPageDescription).toBeVisible();
         await expect(productsPage.emptyPageDescription).toHaveText(PRODUCTS_PAGE_TEXTS.emptyPageArchived);
-
-
-        //  TODO - move to flow verifications
-        // const productListItemsArchived = await productsPage.productsListItem.filter({visible: true}).count();
-        // expect(productListItemsArchived).toBe(2);
     })
 })
 
@@ -201,6 +195,38 @@ test.describe(`Subpages display`, {tag: `@smoke`}, async () => {
         await expect(addBoxSubpage.cancelBtn).toBeVisible();
         await expect(addBoxSubpage.emptyPageDescription).toHaveText(ADD_BOX_TEXTS.emptyPage + ADD_BOX_TEXTS.startExplainer);
 
+    })
+    test(`Household subpage display - Active - empty DB`, async ({dosesPage, householdSubpage}) => {
+
+        // Arrange
+        await dosesPage.goToPage();
+
+        // Act
+        await dosesPage.clickManagePeopleBtn();
+
+        // Assert
+        await expect(householdSubpage.pageTitle).toHaveText(HOUSEHOLD_TEXTS.title);
+        await expect(householdSubpage.newPersonBtn).toBeVisible();
+        await expect(householdSubpage.emptyPageDescription).toHaveText(HOUSEHOLD_TEXTS.emptyPageActive);
+        await expect(householdSubpage.householdListSwitch.getByText(HOUSEHOLD_TEXTS.switchActive)).toHaveAttribute(`style`, ACTIVATION_VALS.regBtnActive);
+        await expect(householdSubpage.householdListSwitch.getByText(HOUSEHOLD_TEXTS.switchArchived)).toBeVisible();
+        await expect(householdSubpage.householdListSwitch.getByText(HOUSEHOLD_TEXTS.switchArchived)).toHaveAttribute(`style`, ACTIVATION_VALS.regBtnInactive);
+    })
+
+    test(`Household subpage display - Archived - empty DB`, async ({dosesPage, householdSubpage}) => {
+
+        // Arrange
+        await dosesPage.goToPage();
+
+        // Act
+        await dosesPage.clickManagePeopleBtn();
+        await householdSubpage.householdListSwitch.getByText(HOUSEHOLD_TEXTS.switchArchived).click();
+
+        // Assert
+        await expect(householdSubpage.emptyPageDescription).toHaveText(HOUSEHOLD_TEXTS.emptyPageArchived);
+        await expect(householdSubpage.householdListSwitch.getByText(HOUSEHOLD_TEXTS.switchArchived)).toHaveAttribute(`style`, ACTIVATION_VALS.regBtnActive);
+        await expect(householdSubpage.householdListSwitch.getByText(HOUSEHOLD_TEXTS.switchActive)).toBeVisible();
+        await expect(householdSubpage.householdListSwitch.getByText(HOUSEHOLD_TEXTS.switchActive)).toHaveAttribute(`style`, ACTIVATION_VALS.regBtnInactive);
     })
 
 })
