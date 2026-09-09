@@ -8,7 +8,8 @@ import {SHOPPING_PAGE_TEXTS} from "../utils/pages/mainPages/shoppingPage";
 import {TRIPS_PAGE_TEXTS} from "../utils/pages/mainPages/tripsPage";
 import {PRODUCTS_PAGE_TEXTS} from "../utils/pages/mainPages/productsPage";
 import {ADD_BOX_TEXTS, AddBoxSubpage} from "../utils/pages/subpages/addBoxSubpage";
-import {HOUSEHOLD_TEXTS, HouseholdSubpage} from "../utils/pages/subpages/HouseholdSubpage";
+import {HOUSEHOLD_TEXTS, HouseholdSubpage} from "../utils/pages/subpages/householdSubpage";
+import {NEW_PERSON_TEXTS} from "../utils/pages/subpages/newPersonSubpage";
 
 test.describe(`Login page display`, {tag: `@smoke`}, async () => {
 
@@ -227,6 +228,20 @@ test.describe(`Subpages display`, {tag: `@smoke`}, async () => {
         await expect(householdSubpage.householdListSwitch.getByText(HOUSEHOLD_TEXTS.switchArchived)).toHaveAttribute(`style`, ACTIVATION_VALS.regBtnActive);
         await expect(householdSubpage.householdListSwitch.getByText(HOUSEHOLD_TEXTS.switchActive)).toBeVisible();
         await expect(householdSubpage.householdListSwitch.getByText(HOUSEHOLD_TEXTS.switchActive)).toHaveAttribute(`style`, ACTIVATION_VALS.regBtnInactive);
+    })
+
+    test(`New Person subpage display - empty DB`, async ({newPersonSubpage}) => {
+
+        // Arrange & Act
+        await newPersonSubpage.goToPage();
+
+        // Assert
+        await expect(newPersonSubpage.pageTitle).toHaveText(NEW_PERSON_TEXTS.title);
+        await expect(newPersonSubpage.cancelBtn).toBeVisible();
+        await expect(newPersonSubpage.addPersonBtn).toBeVisible();
+        await expect(newPersonSubpage.nameField).toBeVisible();
+        await expect(newPersonSubpage.notesField).toBeVisible();
+        await expect(newPersonSubpage.notesDescription).toBeVisible();
     })
 
 })

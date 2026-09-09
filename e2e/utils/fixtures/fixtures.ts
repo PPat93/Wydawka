@@ -8,9 +8,11 @@ import {ShoppingPage} from "../pages/mainPages/shoppingPage";
 import {TripsPage} from "../pages/mainPages/tripsPage";
 import {ProductsPage} from "../pages/mainPages/productsPage";
 import {AddBoxSubpage} from "../pages/subpages/addBoxSubpage";
-import {HouseholdSubpage} from "../pages/subpages/HouseholdSubpage";
+import {HouseholdSubpage} from "../pages/subpages/householdSubpage";
+import {NewPersonSubpage} from "../pages/subpages/newPersonSubpage";
 
 type MainFixtures = {
+    //  Main Pages
     loginPage: LoginPage;
     stockPage: StockPage;
     dosesPage: DosesPage;
@@ -19,7 +21,10 @@ type MainFixtures = {
     shoppingPage: ShoppingPage;
     tripsPage: TripsPage;
     productsPage: ProductsPage;
+
+    //  Subpages
     addBoxSubpage: AddBoxSubpage;
+    newPersonSubpage: NewPersonSubpage;
     shared: Shared;
 }
 
@@ -61,6 +66,10 @@ export const test = base.extend<MainFixtures>({
 
     householdSubpage: async ({page}, use) => {
         await use(new HouseholdSubpage(page))
+    },
+
+    newPersonSubpage: async ({page}, use) => {
+        await use(new NewPersonSubpage(page))
     },
 
     // Misc

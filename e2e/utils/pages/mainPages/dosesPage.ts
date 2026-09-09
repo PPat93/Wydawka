@@ -1,6 +1,6 @@
 import {Page, Locator} from "@playwright/test"
 import {expect} from "playwright/test";
-import {HOUSEHOLD_TEXTS} from "../subpages/HouseholdSubpage";
+import {HOUSEHOLD_TEXTS} from "../subpages/householdSubpage";
 
 export const DOSES_PAGE_TEXTS = {
     title: `Doses`,
