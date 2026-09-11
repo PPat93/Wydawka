@@ -3,7 +3,8 @@ import {Locator, Page} from "@playwright/test";
 
 export const TEXTS = {
     appName: `Parrothecary`,
-    subtitle: `Domowa apteczka`
+    subtitle: `Domowa apteczka`,
+    dateFieldPlaceholder: `dd.mm.rrrr`
 }
 
 export const ACTIVATION_VALS = {
@@ -29,6 +30,7 @@ export class Shared {
     readonly barLogo: Locator;
     readonly aboutBtn: Locator;
     readonly lockBtn: Locator;
+    readonly statisticsBtn: Locator;
 
     //  Menu
     readonly stockMenuBtn: Locator;
@@ -42,6 +44,7 @@ export class Shared {
         this.barLogo = page.getByAltText(`Mini parrot logo`);
         this.aboutBtn = page.getByTitle(`About Parrothecary`);
         this.lockBtn = page.getByTitle(`Lock Parrothecary`);
+        this.statisticsBtn = page.getByTitle(`Money`);
 
         this.stockMenuBtn = page.getByTestId(`menu-${MenuOptions.Stock}`);
         this.dosesMenuBtn = page.getByTestId(`menu-${MenuOptions.Doses}`);
@@ -59,7 +62,11 @@ export class Shared {
         await this.lockBtn.click();
     }
 
-    async clickAboutPage() {
+    async clickAboutBtn() {
         await this.aboutBtn.click();
+    }
+
+    async clickStatisticsBtn() {
+        await this.statisticsBtn.click();
     }
 }
